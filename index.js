@@ -55,11 +55,11 @@ class Server extends net.Server {
   }
 
   onConnect(client) {
-    this.middleware(client, (socket) => {
+    this.middleware(client, (client) => {
       this.response(client, "Successfully logged in! \n");
-      socket.on("data", (data) => {
+      client.on("data", (data) => {
         data = data.toString().replace(/[\r\n]+/g, "");
-        this.emit('request', data, this.response.bind(this, socket), socket);
+        this.emit('request', data, this.response.bind(this, client), client);
       });
     });
   }
